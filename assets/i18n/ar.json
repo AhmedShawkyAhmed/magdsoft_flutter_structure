@@ -10,7 +10,7 @@
   "logout": "تسجيل الخروج",
   "value_is_empty": "القيمة فارغة",
   "success": "تم بنجاح",
-  "userData": "بيانات المستخدم",
+  "user_data": "بيانات المستخدم",
   "language_button": "English",
   "bad_request_error": "طلب غير صالح. حاول مرة أخرى لاحقًا",
   "no_content": "لا يوجد محتوى",
