@@ -1,3 +1,27 @@
 {
-  
+  "no_route_found": "noRouteFound",
+  "name": "Full Name",
+  "full_name": "Name",
+  "password": "Password",
+  "phone": "Phone",
+  "email": "Email",
+  "login": "Login",
+  "register": "Register",
+  "logout": "Logout",
+  "value_is_empty": "Value is empty",
+  "success": "success",
+  "userData": "User Data",
+  "language_button": "عربي",
+  "bad_request_error": "bad request. try again later",
+  "no_content": "No content, try again later",
+  "forbidden_error": "forbidden request. try again later",
+  "unauthorized_error": "user unauthorized, try again later",
+  "not_found_error": "url not found, try again later",
+  "conflict_error": "conflict found, try again later",
+  "internal_server_error": "some thing went wrong, try again later",
+  "unknown_error": "some thing went wrong, try again later",
+  "timeout_error": "time out, try again late",
+  "default_error": "some thing went wrong, try again later",
+  "cache_error": "cache error, try again later",
+  "no_internet_error": "Please check your internet connection"
 }
