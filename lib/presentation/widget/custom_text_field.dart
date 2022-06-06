@@ -4,13 +4,13 @@ import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hint;
-  final Widget? suffix;
+  final Widget? suffixIcon;
 
   const CustomTextField({
     Key? key,
     this.controller,
     this.hint,
-    this.suffix,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
         fillColor: AppColor.brightGray,
         filled: true,
         hoverColor: Colors.red,
-        suffix: suffix,
+        suffixIcon: suffixIcon,
       ),
     );
   }

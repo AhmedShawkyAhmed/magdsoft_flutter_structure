@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColor{
+
+  AppColor._();
   static const Color white = Color(0xFFFFFFFF);
   ///Medium Persian Blue
   static const Color mediumPersianBlue = Color(0xFF005DA3);
