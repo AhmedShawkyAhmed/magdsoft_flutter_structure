@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/constants/app_strings.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/view/curved_container.dart';
@@ -7,8 +8,30 @@ import 'package:magdsoft_flutter_structure/presentation/widget/custom_button.dar
 import 'package:magdsoft_flutter_structure/presentation/widget/custom_text_field.dart';
 import 'package:magdsoft_flutter_structure/utils/navigation.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +67,16 @@ class LoginScreen extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const CustomTextField(
+                                CustomTextField(
                                   hint: 'Email',
+                                  controller: _emailController,
                                 ),
                                 const SizedBox(
                                   height: 18,
                                 ),
                                 CustomTextField(
                                   hint: 'Password',
+                                  controller: _passwordController,
                                   suffixIcon: IconButton(
                                     onPressed: () {},
                                     icon: const Icon(
@@ -66,7 +91,9 @@ class LoginScreen extends StatelessWidget {
                                       child: CustomButton(
                                         textButton: 'Register',
                                         onPressed: () {
-                                          goToScreenAndFinish(context: context, routeName: AppStrings.register);
+                                          goToScreenAndFinish(
+                                              context: context,
+                                              routeName: AppStrings.register);
                                         },
                                       ),
                                     ),
@@ -77,6 +104,11 @@ class LoginScreen extends StatelessWidget {
                                       child: CustomButton(
                                         textButton: 'Login',
                                         onPressed: () {
+                                          GlobalCubit.get(context)
+                                              .loginWithEmailAndPassword(
+                                            email: _emailController.text,
+                                            password: _passwordController.text,
+                                          );
                                         },
                                       ),
                                     ),
@@ -113,6 +145,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
