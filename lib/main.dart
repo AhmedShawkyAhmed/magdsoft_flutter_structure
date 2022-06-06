@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
                       GlobalCupertinoLocalizations.delegate,
                       DefaultCupertinoLocalizations.delegate,
                       GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
+                      // GlobalWidgetsLocalizations.delegate,
                       delegate,
                     ],
                     locale: delegate.currentLocale,
