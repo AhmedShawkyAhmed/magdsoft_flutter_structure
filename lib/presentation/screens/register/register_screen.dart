@@ -222,7 +222,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       Expanded(
                                         child: CustomButton(
                                           textButton: 'Login',
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            goToScreenAndFinish(context: context, routeName: AppStrings.login);
+                                          },
                                         ),
                                       ),
                                     ],
