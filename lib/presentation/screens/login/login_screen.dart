@@ -88,20 +88,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  CustomTextField(
-                                    hint: 'Password',
-                                    controller: _passwordController,
-                                    suffixIcon: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.remove_red_eye,
-                                      ),
-                                    ),
-                                    validator: (String? value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'password is empty';
-                                      }
-                                      return null;
+                                  BlocBuilder<GlobalCubit,GlobalState>(
+                                    builder: (BuildContext context, GlobalState state) {
+                                      return CustomTextField(
+                                        hint: 'Password',
+                                        controller: _passwordController,
+                                        obscureText: globalCubit.isObscured,
+                                        suffixIcon: IconButton(
+                                          onPressed: () {
+                                            globalCubit.toggleObscureIcon();
+                                          },
+                                          icon: IconButton(
+                                            onPressed: (){
+                                              globalCubit.toggleObscureIcon();
+                                            },
+                                            icon: globalCubit.isObscured
+                                                ? const Icon(
+                                                    Icons.remove_red_eye,
+                                                  )
+                                                : const Icon(Icons.lock),
+                                          ),
+                                        ),
+                                        validator: (String? value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'password is empty';
+                                          }
+                                          return null;
+                                        },
+                                      );
                                     },
                                   ),
                                   const Spacer(),

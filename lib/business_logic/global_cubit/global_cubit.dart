@@ -10,6 +10,11 @@ import 'package:magdsoft_flutter_structure/data/network/responses/register_respo
 part 'global_state.dart';
 
 class GlobalCubit extends Cubit<GlobalState> {
+
+
+  bool _isObscured = true;
+
+
   GlobalCubit() : super(GlobalInitial());
 
   AccountModel? accountModel;
@@ -60,4 +65,11 @@ class GlobalCubit extends Cubit<GlobalState> {
       emit(ErrorRegisterState(statusModel.message as String));
     }
   }
+
+  void toggleObscureIcon(){
+    _isObscured = !_isObscured;
+    emit(ToggleObscureIconState());
+  }
+
+  bool get isObscured => _isObscured;
 }
