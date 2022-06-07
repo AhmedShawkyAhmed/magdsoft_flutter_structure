@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/constants/app_strings.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/view/curved_container.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/custom_button.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/custom_text_field.dart';
+import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:magdsoft_flutter_structure/utils/navigation.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,11 +21,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late FToast ffToast;
 
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    fToast.init(context);
     super.initState();
   }
 
@@ -85,34 +90,48 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 const Spacer(),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomButton(
-                                        textButton: 'Register',
-                                        onPressed: () {
-                                          goToScreenAndFinish(
-                                              context: context,
-                                              routeName: AppStrings.register);
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 38,
-                                    ),
-                                    Expanded(
-                                      child: CustomButton(
-                                        textButton: 'Login',
-                                        onPressed: () {
-                                          GlobalCubit.get(context)
-                                              .loginWithEmailAndPassword(
-                                            email: _emailController.text,
-                                            password: _passwordController.text,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                                BlocConsumer<GlobalCubit, GlobalState>(
+                                  listener: (context, state) {
+                                    if(state is ErrorLoginState){
+                                      showToast(state.error);
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if(state is LoadingLoginState){
+                                      return const CircularProgressIndicator();
+                                    }
+                                    return Row(
+                                      children: [
+                                        Expanded(
+                                          child: CustomButton(
+                                            textButton: 'Register',
+                                            onPressed: () {
+                                              goToScreenAndFinish(
+                                                context: context,
+                                                routeName: AppStrings.register,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 38,
+                                        ),
+                                        Expanded(
+                                          child: CustomButton(
+                                            textButton: 'Login',
+                                            onPressed: () {
+                                              GlobalCubit.get(context)
+                                                  .loginWithEmailAndPassword(
+                                                email: _emailController.text,
+                                                password: _passwordController
+                                                    .text,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 )
                               ],
                             ),

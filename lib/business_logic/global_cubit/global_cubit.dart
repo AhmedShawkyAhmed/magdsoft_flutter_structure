@@ -20,9 +20,17 @@ class GlobalCubit extends Cubit<GlobalState> {
     required String email,
     required String password,
   })async {
+    emit(LoadingLoginState());
     StatusModel? statusModel = await loginResponse(email: email, password: password);
     if(statusModel != null){
       log('Success ${statusModel.status}');
+      switch(statusModel.status){
+        case 200:
+          emit(SuccessLoginState());
+          break;
+        case 404:
+          emit(ErrorLoginState(statusModel.message as String));
+      }
     }
    // emit(ErrorLoginState(error));
 
