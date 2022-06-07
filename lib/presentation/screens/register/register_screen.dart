@@ -1,9 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
+import 'package:magdsoft_flutter_structure/constants/app_strings.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/view/curved_container.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/custom_button.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/custom_text_field.dart';
+import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
+import 'package:magdsoft_flutter_structure/utils/navigation.dart';
+import 'package:magdsoft_flutter_structure/utils/string_matcher.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -17,17 +26,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late final TextEditingController _fullNameController;
   late final TextEditingController _emailController;
-  late final TextEditingController _phoneNameController;
-  late final TextEditingController _passwordNameController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
 
   @override
   void initState() {
     _fullNameController = TextEditingController();
     _emailController = TextEditingController();
-    _phoneNameController = TextEditingController();
-    _passwordNameController = TextEditingController();
+    _phoneController = TextEditingController();
+    _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
+    fToast.init(context);
     super.initState();
   }
 
@@ -35,14 +45,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void dispose() {
     _fullNameController.dispose();
     _emailController.dispose();
-    _phoneNameController.dispose();
-    _passwordNameController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final globalCubit = GlobalCubit.get(context);
     return Scaffold(
       backgroundColor: AppColor.mediumPersianBlue,
       body: Form(
@@ -74,15 +85,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Center(
                           child: Column(
                             children: [
-                               CustomTextField(
+                              CustomTextField(
                                 hint: 'Full Name',
                                 controller: _fullNameController,
                                 keyboardType: TextInputType.name,
-                                validator: (String? value){
-                                  if(value == null || value.isEmpty){
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Full name is required';
-                                  }
-                                  else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -90,15 +100,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const SizedBox(
                                 height: 18,
                               ),
-                               CustomTextField(
+                              CustomTextField(
                                 hint: 'Email',
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
-                                validator: (String? value){
-                                  if(value == null || value.isEmpty){
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Email is required';
-                                  }
-                                  else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -106,15 +115,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const SizedBox(
                                 height: 18,
                               ),
-                               CustomTextField(
+                              CustomTextField(
                                 hint: 'Phone',
-                                controller: _phoneNameController,
+                                controller: _phoneController,
                                 keyboardType: TextInputType.phone,
-                                validator: (String? value){
-                                  if(value == null || value.isEmpty){
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Phone is required';
-                                  }
-                                  else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -124,13 +132,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               CustomTextField(
                                 hint: 'Password',
-                                controller: _passwordNameController,
+                                controller: _passwordController,
                                 keyboardType: TextInputType.visiblePassword,
-                                validator: (String? value){
-                                  if(value == null || value.isEmpty){
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Password is required';
-                                  }
-                                  else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -148,11 +155,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hint: 'Confirm Password',
                                 controller: _confirmPasswordController,
                                 keyboardType: TextInputType.visiblePassword,
-                                validator: (String? value){
-                                  if(value == null || value.isEmpty){
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Confirm password is required';
-                                  }
-                                  else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -166,28 +172,62 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const SizedBox(
                                 height: 18,
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomButton(
-                                      textButton: 'Register',
-                                      onPressed: () {
-                                        if(_formKey.currentState!.validate()){
-
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 38,
-                                  ),
-                                  Expanded(
-                                    child: CustomButton(
-                                      textButton: 'Login',
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ],
+                              BlocConsumer<GlobalCubit, GlobalState>(
+                                listener: (context, state) {
+                                  if(state is ErrorRegisterState){
+                                    fToast.removeCustomToast();
+                                    showToast(state.message);
+                                  }
+                                  else if(state is SuccessLoginState){
+                                    goToScreenAndFinish(
+                                        context: context,
+                                        routeName: AppStrings.home,
+                                        arguments: state.getAccounts);
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if(state is LoadingRegisterState){
+                                    return const CircularProgressIndicator();
+                                  }
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: CustomButton(
+                                          textButton: 'Register',
+                                          onPressed: () {
+                                            if (_passwordController.text !=
+                                                _confirmPasswordController
+                                                    .text) {
+                                              showToast(
+                                                  'Password is not matching');
+                                            } else {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                globalCubit.registerAccount(
+                                                  fullName:
+                                                      _fullNameController.text,
+                                                  email: _emailController.text,
+                                                  phone: _phoneController.text,
+                                                  password:
+                                                      _passwordController.text,
+                                                );
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 38,
+                                      ),
+                                      Expanded(
+                                        child: CustomButton(
+                                          textButton: 'Login',
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
                               )
                             ],
                           ),

@@ -3,7 +3,7 @@ import 'package:magdsoft_flutter_structure/constants/app_strings.dart';
 import 'package:magdsoft_flutter_structure/data/models/account_model.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/home/home_screen.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/login/login_screen.dart';
-import 'package:magdsoft_flutter_structure/presentation/screens/register/splash_screen.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/register/register_screen.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/splash/splash_screen.dart';
 
 class AppRouter {

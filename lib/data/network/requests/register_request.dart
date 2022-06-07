@@ -9,7 +9,7 @@ Future<Response> registerRequest({
   required String phone,
 }) {
   return DioHelper.postData(
-    url: login,
+    url: register,
     body: {
       'name': name,
       'email': email,

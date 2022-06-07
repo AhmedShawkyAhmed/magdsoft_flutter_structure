@@ -22,7 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   final _formKey = GlobalKey<FormState>();
-  late FToast ffToast;
 
   @override
   void initState() {

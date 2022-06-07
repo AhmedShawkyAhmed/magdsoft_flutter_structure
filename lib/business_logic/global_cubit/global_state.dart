@@ -23,3 +23,15 @@ class ErrorLoginState extends GlobalState {
 }
 
 class UnknownState extends GlobalState{}
+
+class SuccessRegisterState extends GlobalState{
+
+}
+class ErrorRegisterState extends GlobalState{
+  final String message;
+  ErrorRegisterState(this.message);
+}
+
+class LoadingRegisterState extends GlobalState{
+
+}
