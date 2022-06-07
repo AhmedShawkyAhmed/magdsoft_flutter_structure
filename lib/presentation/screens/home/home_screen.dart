@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:magdsoft_flutter_structure/constants/app_strings.dart';
 import 'package:magdsoft_flutter_structure/data/models/account_model.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/custom_button.dart';
+import 'package:magdsoft_flutter_structure/utils/navigation.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<AccountModel?> _accounts;
@@ -42,7 +44,9 @@ class HomeScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: AppColor.mediumPersianBlue,
                 ),
-                onPressed: (){},
+                onPressed: (){
+                  goToScreenAndFinish(context: context, routeName: AppStrings.login);
+                },
                 child: const Text(
                   'Logout',
                 ),
