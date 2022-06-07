@@ -95,6 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if(state is ErrorLoginState){
                                       showToast(state.error);
                                     }
+                                    else if(state is SuccessLoginState){
+                                      goToScreenAndFinish(context: context, routeName: AppStrings.home,arguments: state.getAccounts);
+                                    }
                                   },
                                   builder: (context, state) {
                                     if(state is LoadingLoginState){
