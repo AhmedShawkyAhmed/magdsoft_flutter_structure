@@ -40,9 +40,10 @@ class HomeScreen extends StatelessWidget {
             const Spacer(),
             SizedBox(
               height: 51,
+              width: 120,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: AppColor.mediumPersianBlue,
+                  primary: AppColor.alabamaCrimson,
                 ),
                 onPressed: (){
                   goToScreenAndFinish(context: context, routeName: AppStrings.login);

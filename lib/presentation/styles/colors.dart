@@ -12,4 +12,6 @@ class AppColor{
   static const Color darkSilver = Color(0xFF707070);
   /// Dark Silver
   static const Color darkSilver2 = Color(0xFF7B7B7B);
+  //Alabama Crimson
+  static const Color alabamaCrimson = Color(0xFFAD002F);
 }
