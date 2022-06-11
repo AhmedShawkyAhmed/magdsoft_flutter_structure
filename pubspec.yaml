@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^8.0.9
   sizer: ^2.0.15
   flutter_svg_provider: ^1.0.3
+  bot_toast: ^4.0.2
 
 dev_dependencies:
   flutter_test:
