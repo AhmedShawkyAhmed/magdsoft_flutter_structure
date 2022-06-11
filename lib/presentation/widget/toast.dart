@@ -1,20 +1,29 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-final FToast fToast = FToast();
-showToast(String? text) {
-  Widget toast = Container(
-    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(25.0),
-      //color: AppColors.lightGray,
-    ),
-    child: Text(text!),
-  );
+void showToast({
+  required String msg,
+  required ToastStates state,
+  double fontSize = 16,
+  int seconds = 3,
+}) =>
+    BotToast.showText(
+      text: msg,
+      duration: Duration(seconds: seconds),
+      contentColor: toastColor(state),
+      clickClose: true,
+      align: const Alignment(0, -0.9),
+    );
 
-  fToast.showToast(
-    child: toast,
-    gravity: ToastGravity.TOP,
-    toastDuration: const Duration(seconds: 2),
-  );
+enum ToastStates { sUCCESS, eRROR, wARNING }
+
+Color toastColor(ToastStates state) {
+  switch (state) {
+    case ToastStates.sUCCESS:
+      return Colors.green;
+    case ToastStates.eRROR:
+      return Colors.red;
+    case ToastStates.wARNING:
+      return Colors.yellow;
+  }
 }

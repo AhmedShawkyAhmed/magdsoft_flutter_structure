@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,20 +14,19 @@ import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
-
 late LocalizationDelegate delegate;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocOverrides.runZoned(
-        () async {
+    () async {
       DioHelper.init();
       await CacheHelper.init();
       final locale =
-          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
+          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "en";
       delegate = await LocalizationDelegate.create(
         fallbackLocale: locale,
-        supportedLocales: ['ar', 'en'],
+        supportedLocales: ['en', 'ar'],
       );
       await delegate.changeLocale(Locale(locale));
       runApp(MyApp(
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           Intl.defaultLocale = value.languageCode;
         });
       } catch (e) {
-        showToast(e.toString());
+        showToast(msg: e.toString(), state: ToastStates.eRROR);
       }
     };
   }
@@ -106,6 +106,8 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                     ),
+                    builder: BotToastInit(),
+                    navigatorObservers: [BotToastNavigatorObserver()],
                   );
                 }),
               );
