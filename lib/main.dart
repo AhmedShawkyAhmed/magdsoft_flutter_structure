@@ -23,7 +23,7 @@ Future<void> main() async {
       DioHelper.init();
       await CacheHelper.init();
       final locale =
-          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
+          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "en";
       delegate = await LocalizationDelegate.create(
         fallbackLocale: locale,
         supportedLocales: ['ar', 'en'],
@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
                       appBarTheme: const AppBarTheme(
                         elevation: 0.0,
                         systemOverlayStyle: SystemUiOverlayStyle(
-                          //statusBarColor: AppColors.transparent,
+                         // statusBarColor: AppColors.transparent,
                           statusBarIconBrightness: Brightness.dark,
                         ),
                       ),
