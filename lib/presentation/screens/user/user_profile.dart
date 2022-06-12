@@ -12,8 +12,12 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight=MediaQuery.of(context).size.height;
+    double screenWidth=MediaQuery.of(context).size.width;
     return BlocConsumer<GlobalCubit, GlobalState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+
+      },
       builder: (context, state) {
         var cubit = GlobalCubit.get(context);
         return Scaffold(
@@ -26,53 +30,55 @@ class UserScreen extends StatelessWidget {
             ),
             body: Padding(
               padding:
-                  const EdgeInsetsDirectional.only(top: 80.0, bottom: 70.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 80.0),
-                    child: Text(
-                      'Name : ${cubit.accountModel!.account[0].name}',
-                      style:
-                          const TextStyle(color: DEFAULT_COLOR, fontSize: 20),
+                   EdgeInsetsDirectional.only(top:screenHeight*0.2, bottom: screenHeight*0.1),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:  EdgeInsetsDirectional.only(start: screenWidth*0.16),
+                      child: Text(
+                        'Name : ${cubit.accountModel!.account[0].name}',
+                        style:
+                            const TextStyle(color: DEFAULT_COLOR, fontSize: 18),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 80.0),
-                    child: Text(
-                      'Email : ${cubit.accountModel!.account[0].email}',
-                      style:
-                          const TextStyle(color: DEFAULT_COLOR, fontSize: 20),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 80.0),
-                    child: Text(
-                      'Phone : ${cubit.accountModel!.account[0].phone}',
-                      style:
-                          const TextStyle(color: DEFAULT_COLOR, fontSize: 20),
+                    Padding(
+                      padding:  EdgeInsetsDirectional.only(start: screenWidth*0.16),
+                      child: Text(
+                        'Email : ${cubit.accountModel!.account[0].email}',
+                        style:
+                            const TextStyle(color: DEFAULT_COLOR, fontSize: 18),
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  Center(
-                    child: defaultButton(
-                      onPressed: () {
-                        navigateAndFinish(context, const LoginScreen());
-                      },
-                      text: 'LogOut',
-                      width: 110.0,
-                      height: 50.0,
-                      backgroundColor: const Color.fromRGBO(173, 0, 47, 1),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding:  EdgeInsetsDirectional.only(start: screenWidth*0.16),
+                      child: Text(
+                        'Phone : ${cubit.accountModel!.account[0].phone}',
+                        style:
+                            const TextStyle(color: DEFAULT_COLOR, fontSize: 18),
+                      ),
+                    ),
+                    const Spacer(),
+                    Center(
+                      child: defaultButton(
+                        onPressed: () {
+                          navigateAndFinish(context, const LoginScreen());
+                        },
+                        text: 'LogOut',
+                        width: 110.0,
+                        height: 50.0,
+                        backgroundColor: const Color.fromRGBO(173, 0, 47, 1),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ));
       },

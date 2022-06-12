@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/user/register_screen.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/user/user_profile.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/button.dart';
@@ -37,7 +38,7 @@ class LoginScreen extends StatelessWidget {
         var cubit=GlobalCubit.get(context);
         return SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             body: SingleChildScrollView(
                 child: Container(
                   color: DEFAULT_COLOR,
@@ -78,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 500,
+                        //height: 500,
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadiusDirectional.only(
@@ -105,9 +106,11 @@ class LoginScreen extends StatelessWidget {
                                   height: 20,
                                 ),
                                 defaultTextFormField(
-                                  obscureText: true,
                                   controller: passwordController,
                                   hintText: 'Password',
+                                  obscureText: cubit.isVisible,
+                                  suffixIcon: cubit.suffix,
+                                  onPressedIcon: cubit.changePasswordVisibility,
                                   keyboardType: TextInputType.visiblePassword,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -120,7 +123,9 @@ class LoginScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: defaultButton(onPressed: (){}, text: 'Register'),
+                                      child: defaultButton(onPressed: (){
+                                        navigateTo(context, RegisterScreen());
+                                      }, text: 'Register'),
                                     ),
                                     const SizedBox(
                                       width: 30,
@@ -143,7 +148,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                 )),
           ),
-        );},
+        );
+        },
 
     );
   }
