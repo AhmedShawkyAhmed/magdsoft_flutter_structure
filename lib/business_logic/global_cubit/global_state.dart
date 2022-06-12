@@ -4,3 +4,7 @@ part of 'global_cubit.dart';
 abstract class GlobalState {}
 
 class GlobalInitial extends GlobalState {}
+
+class GlobalLoginLoading extends GlobalState {}
+class GlobalLoginSuccess extends GlobalState {}
+class GlobalLoginError extends GlobalState {}

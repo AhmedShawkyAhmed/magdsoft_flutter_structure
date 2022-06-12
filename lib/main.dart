@@ -9,6 +9,7 @@ import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cu
 import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
+import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
@@ -97,11 +98,12 @@ class _MyAppState extends State<MyApp> {
                     onGenerateRoute: widget.appRouter.onGenerateRoute,
                     theme: ThemeData(
                       fontFamily: 'cairo',
-                      //scaffoldBackgroundColor: AppColors.white,
+                      scaffoldBackgroundColor: Colors.white,
                       appBarTheme: const AppBarTheme(
+                        color: DEFAULT_COLOR,
                         elevation: 0.0,
                         systemOverlayStyle: SystemUiOverlayStyle(
-                         // statusBarColor: AppColors.transparent,
+                          //statusBarColor: AppColors.transparent,
                           statusBarIconBrightness: Brightness.dark,
                         ),
                       ),
