@@ -10,14 +10,20 @@ import 'package:magdsoft_flutter_structure/presentation/widget/navigator.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/text_field.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
   Widget build(BuildContext context) {
+
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey();
+    final _formKey = GlobalKey<FormState>();
     return BlocConsumer<GlobalCubit,GlobalState>(
       listener: (context,state){
         if(state is GlobalLoginSuccess){
@@ -35,6 +41,8 @@ class LoginScreen extends StatelessWidget {
         }
       },
         builder: (context,state){
+          double screenHeight=MediaQuery.of(context).size.height;
+          double screenWidth=MediaQuery.of(context).size.width;
         var cubit=GlobalCubit.get(context);
         return SafeArea(
           child: Scaffold(
@@ -48,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding:
-                          const EdgeInsetsDirectional.only(end: 20.0, top: 50.0),
+                           EdgeInsetsDirectional.only(end: screenWidth*0.05, top: screenHeight*0.06),
                           // ignore: sized_box_for_whitespace
                           child: Container(
                             height: 30.0,
@@ -69,9 +77,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsetsDirectional.only(top: 30.0),
-                          child: Center(
+                         Padding(
+                          padding: EdgeInsetsDirectional.only(top: screenHeight*0.02),
+                          child: const Center(
                               child: Image(
                                   image: AssetImage('assets/images/appBarLogo.png'))),
                         )
@@ -79,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     Container(
                       width: double.infinity,
-                      //height: screenHeight*0.66,
+                      height: screenHeight*0.62,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadiusDirectional.only(
@@ -87,9 +95,9 @@ class LoginScreen extends StatelessWidget {
                             topStart: Radius.circular(40.0)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.only(top: 120,start: 50,end: 50.0),
+                        padding:  EdgeInsetsDirectional.only(top: screenHeight*0.2,start: screenWidth*0.11,end: screenWidth*0.11,bottom: screenHeight*0.05),
                         child: Form(
-                          key: formKey,
+                          key: _formKey,
                           child: Column(
                             children: [
                               defaultTextFormField(
@@ -120,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                                   }
                                 },
                               ),
-                              const SizedBox(height: 90,),
+                              const Spacer(),
                               state is! GlobalLoginLoading?
                               Row(
                                 children: [
@@ -134,7 +142,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: defaultButton(onPressed: (){
-                                      if (formKey.currentState != null && formKey.currentState!.validate()) {
+                                      if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                                         cubit.login(emailController.text, passwordController.text);
                                       }
                                     }, text: 'Login'),

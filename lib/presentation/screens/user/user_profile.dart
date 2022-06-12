@@ -43,8 +43,8 @@ class UserScreen extends StatelessWidget {
                             const TextStyle(color: DEFAULT_COLOR, fontSize: 18),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                     SizedBox(
+                      height: screenHeight*0.02,
                     ),
                     Padding(
                       padding:  EdgeInsetsDirectional.only(start: screenWidth*0.16),
@@ -54,8 +54,8 @@ class UserScreen extends StatelessWidget {
                             const TextStyle(color: DEFAULT_COLOR, fontSize: 18),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                     SizedBox(
+                      height: screenHeight*0.02,
                     ),
                     Padding(
                       padding:  EdgeInsetsDirectional.only(start: screenWidth*0.16),
