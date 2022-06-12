@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Container(
                       width: double.infinity,
-                      height: screenHeight*0.62,
+                      height: screenHeight*0.7,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadiusDirectional.only(
@@ -149,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   )
                                 ],
                               ):const CircularProgressIndicator(color: DEFAULT_COLOR,),
+                              const Spacer(),
                             ],
                           ),
                         ),

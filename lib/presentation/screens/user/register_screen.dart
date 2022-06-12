@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                            image: AssetImage('assets/images/appBarLogo.png'))),
                    Container(
                      width: double.infinity,
-                     height: screenHeight*0.68,
+                     height: screenHeight*0.75,
                      decoration: const BoxDecoration(
                        color: Colors.white,
                        borderRadius: BorderRadiusDirectional.only(
@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                            topStart: Radius.circular(40.0)),
                      ),
                      child: Padding(
-                       padding:  EdgeInsetsDirectional.only(top: screenHeight*0.07,start: screenWidth*0.11,end: screenWidth*0.11,bottom: screenHeight*0.026),
+                       padding:  EdgeInsetsDirectional.only(top: screenHeight*0.07,start: screenWidth*0.11,end: screenWidth*0.11),
                        child: Form(
                          key: _formKey,
                          child: Column(
@@ -183,6 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                  : const CircularProgressIndicator(
                                      color: DEFAULT_COLOR,
                                    ),
+                             const Spacer(),
                            ],
                          ),
                        ),
