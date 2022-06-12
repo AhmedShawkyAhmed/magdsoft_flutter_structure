@@ -38,9 +38,9 @@ class LoginScreen extends StatelessWidget {
         var cubit=GlobalCubit.get(context);
         return SafeArea(
           child: Scaffold(
-            body: Container(
-              color: DEFAULT_COLOR,
-              child: SingleChildScrollView(
+            body: SingleChildScrollView(
+              child: Container(
+                color: DEFAULT_COLOR,
                 child: Column(
                   children: [
                     Stack(
