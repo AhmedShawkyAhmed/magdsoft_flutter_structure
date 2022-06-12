@@ -108,7 +108,9 @@ class RegisterScreen extends StatelessWidget {
                                 hintText: 'Password',
                                 obscureText: cubit.isVisible,
                                 suffixIcon: cubit.suffix,
-                                onPressedIcon: cubit.changePasswordVisibility,
+                                onPressedIcon: (){
+                                  cubit.changePasswordVisibility();
+                                },
                                 keyboardType: TextInputType.visiblePassword,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -122,9 +124,11 @@ class RegisterScreen extends StatelessWidget {
                               defaultTextFormField(
                                 controller: confirmPassController,
                                 hintText: 'Confirm Password',
-                                obscureText: cubit.isConfirmVisible,
-                                suffixIcon: cubit.suffixConfirm,
-                                onPressedIcon: cubit.changeConfirmPasswordVisibility,
+                                obscureText: cubit.isVisible,
+                                suffixIcon: cubit.suffix,
+                                onPressedIcon: (){
+                                  cubit.changePasswordVisibility();
+                                },
                                 keyboardType: TextInputType.visiblePassword,
                                 validator: (value) {
                                   if (value!.isEmpty) {

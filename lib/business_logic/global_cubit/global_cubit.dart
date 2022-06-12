@@ -54,14 +54,4 @@ class GlobalCubit extends Cubit<GlobalState> {
     isVisible ? suffix=Icons.visibility_off : suffix=Icons.visibility;
     emit(GlobalChangePasswordVisibilityState());
   }
-
-  bool isConfirmVisible=true;
-  IconData suffixConfirm=Icons.visibility_off;
-
-  void changeConfirmPasswordVisibility(){
-    isConfirmVisible = !isConfirmVisible;
-    isConfirmVisible ? suffixConfirm=Icons.visibility_off : suffixConfirm=Icons.visibility;
-    emit(GlobalChangePasswordVisibilityState());
-  }
-
 }
