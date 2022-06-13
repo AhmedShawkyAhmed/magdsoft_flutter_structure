@@ -1,3 +1,49 @@
 {
-  
+	"app_bar": 
+	{
+		"title": "بيانات المستخدم"
+	},
+	"button": 
+	{
+		"logIn": "تسجيل الخروج",
+		"logOut": "تسجيل الخروج",
+		"register": "تسجيل",
+		"change_language": "اللغة"
+	},
+	"language": 
+	{
+		"name": 
+		{
+			"en": "الانجليزية",
+		
+            "ar": "العربية"
+		},
+        "selected_message": "اللغة المختارة حالياً هي  {language}"
+	},
+	"auth": 
+	{
+		"register": 
+		{
+			"full_name": "الإسم كاملاً",
+            "email": "البريد الإلكتروني",
+            "phone": "رقم الهاتف",
+            "password": "كلمة السر" ,
+            "confirm_password": "تأكيد كلمة السر"
+		},
+        "login":    
+		{
+			"email": "البريد الإلكتروني",
+            "password": "كلمة السر"
+      
+		}
+	},
+    "user_data": 
+	{
+		"form": 
+		{
+			"name": "الإسم",
+            "email": "البريد الالكتروني",
+            "phone": "رقم الهاتف"
+		}
+    }
 }
