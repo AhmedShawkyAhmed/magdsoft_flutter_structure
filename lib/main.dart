@@ -7,19 +7,20 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:magdsoft_flutter_structure/business_logic/bloc_observer.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
+import 'package:magdsoft_flutter_structure/data/network/responses/auth_response.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
+import 'package:magdsoft_flutter_structure/data/repository/auth/authentication_repository.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
-
 
 late LocalizationDelegate delegate;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocOverrides.runZoned(
-        () async {
+    () async {
       DioHelper.init();
       await CacheHelper.init();
       final locale =
@@ -71,7 +72,8 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: ((context) => GlobalCubit()),
+          create: ((context) => GlobalCubit(
+              AuthenticationRepository(DioHelper(), AuthReoponseServices()))),
         ),
       ],
       child: BlocConsumer<GlobalCubit, GlobalState>(
@@ -84,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                 LayoutBuilder(builder: (context, constraints) {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
-                    title: 'Werash',
+                    title: translate('app_bar.title'),
                     localizationsDelegates: [
                       GlobalCupertinoLocalizations.delegate,
                       DefaultCupertinoLocalizations.delegate,

@@ -13,10 +13,13 @@ class DioHelper {
     );
   }
 
+// Get Data
   static Future<Response> getData(
       {required String url, required Map<String, dynamic> query}) async {
     return await dio!.get(url, queryParameters: query);
   }
+
+// postData
 
   static Future<Response> postData({
     required String url,

@@ -1,3 +1,47 @@
 {
-  
+	"app_bar": 
+	{
+		"title": "User Data "
+	},
+	"button": 
+	{
+		"logIn": "Login",
+		"logOut": "Logout",
+		"register": "Register",
+		"change_language": "Language"
+	},
+	"language": 
+	{
+		"name": 
+		{
+			"en": "English",
+            "ar": "Arabic"
+		},
+        "selected_message": "Your selected language is {language}"
+	},
+	"auth": 
+	{
+		"register": 
+		{
+			"full_name": "Full Name",
+            "email": "Email",
+            "phone": "Phone",
+            "password": "Password",
+            "confirm_password": "Confirm Password"
+		},
+        "login":    
+		{
+			"email": "Email",
+            "password": "Password"
+		}
+	},
+    "user_data": 
+	{
+		"form": 
+		{
+			"name": "Name",
+            "email": "Email",
+            "phone": "Phone"
+		}
+    }
 }
