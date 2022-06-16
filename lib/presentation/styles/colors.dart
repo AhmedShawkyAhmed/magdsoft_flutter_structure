@@ -8,6 +8,7 @@ class AppColors{
   static Color  textInputFillColor = HexColor.fromHex('ECECEC');
   static Color  primaryButtonColor = HexColor.fromHex('005DA3');
   static Color  secondaryButtonColor = HexColor.fromHex('AD002F');
+  static Color  hintTextInputColor = HexColor.fromHex('7B7B7B');
 }
 
 extension HexColor on Color{
