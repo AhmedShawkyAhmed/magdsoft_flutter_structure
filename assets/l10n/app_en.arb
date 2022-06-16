@@ -1,0 +1,11 @@
+{
+    "email": "Email",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "userData": "User Data"
+}
