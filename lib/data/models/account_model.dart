@@ -15,8 +15,8 @@ class User {
   late final String phone;
   late final String updatedAt;
   late final String createdAt;
-  
-  User.fromJson(Map<String, dynamic> json){
+
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -38,3 +38,12 @@ class User {
     return _data;
   }
 }
+
+final userTest1 = User(
+    createdAt: '',
+    email: 'test@gmail.com',
+    id: 1234,
+    name: 'test',
+    password: '123456',
+    phone: '123456',
+    updatedAt: '');
