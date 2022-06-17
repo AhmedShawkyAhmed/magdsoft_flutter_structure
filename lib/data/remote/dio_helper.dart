@@ -7,7 +7,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: baseURL,
+        baseUrl:  baseURL,
         receiveDataWhenStatusError: true,
       ),
     );
