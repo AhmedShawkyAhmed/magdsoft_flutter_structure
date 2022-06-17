@@ -9,7 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final _key = GlobalKey<FormState>();
   LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -64,47 +64,69 @@ class LoginScreen extends StatelessWidget {
                     topRight: Radius.circular(50),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    const Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        width: double.infinity,
+                child: Form(
+                  key: _key,
+                  child: Column(
+                    children: [
+                      const Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          width: double.infinity,
+                        ),
                       ),
-                    ),
-                    TextInputField(
-                      controller: _emailController,
-                      hintText: AppLocalizations.of(context)!.email,
-                      obscureText: false,
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    TextInputField(
-                      controller: _passwordController,
-                      hintText: AppLocalizations.of(context)!.password,
-                      obscureText: true,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          AppButton(
-                            text: AppLocalizations.of(context)!.register,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, Routes.registerRoute);
-                            },
-                          ),
-                          AppButton(
-                            text: AppLocalizations.of(context)!.login,
-                            onPressed: () {},
-                          ),
-                        ],
+                      TextInputField(
+                        controller: _emailController,
+                        validator: ((input) {
+                          print(input);
+                          if ((input!.isEmpty)) {
+                            return 'Email is empty';
+                          }
+                          if (!input.isValidEmail) {
+                            return 'Not valid Email';
+                          }
+                        }),
+                        hintText: AppLocalizations.of(context)!.email,
+                        obscureText: false,
                       ),
-                    )
-                  ],
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      TextInputField(
+                        validator: ((input) {
+                          if (input!.isEmpty) {
+                            return 'Password is empty';
+                          }
+                          if (input.length < 6) {
+                            return 'Password is too short';
+                          }
+                        }),
+                        controller: _passwordController,
+                        hintText: AppLocalizations.of(context)!.password,
+                        obscureText: true,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            AppButton(
+                              text: AppLocalizations.of(context)!.register,
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, Routes.registerRoute);
+                              },
+                            ),
+                            AppButton(
+                              text: AppLocalizations.of(context)!.login,
+                              onPressed: () {
+                                if (_key.currentState!.validate()) {}
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],

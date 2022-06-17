@@ -13,6 +13,7 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  final _key = GlobalKey<FormState>();
   RegisterScreen({Key? key}) : super(key: key);
 
   @override
@@ -67,71 +68,116 @@ class RegisterScreen extends StatelessWidget {
                     topRight: Radius.circular(50),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    const Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        width: double.infinity,
+                child: Form(
+                  key: _key,
+                  child: Column(
+                    children: [
+                      const Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          width: double.infinity,
+                        ),
                       ),
-                    ),
-                    TextInputField(
-                      controller: _fullNameController,
-                      hintText: AppLocalizations.of(context)!.fullName,
-                      obscureText: false,
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    TextInputField(
-                      controller: _emailController,
-                      hintText: AppLocalizations.of(context)!.email,
-                      obscureText: false,
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    TextInputField(
-                      controller: _phoneController,
-                      hintText: AppLocalizations.of(context)!.phone,
-                      obscureText: false,
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    TextInputField(
-                      controller: _passwordController,
-                      hintText: AppLocalizations.of(context)!.password,
-                      obscureText: true,
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    TextInputField(
-                      controller: _confirmPasswordController,
-                      hintText: AppLocalizations.of(context)!.confirmPassword,
-                      obscureText: true,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          AppButton(
-                            text: AppLocalizations.of(context)!.register,
-                            onPressed: () {},
-                          ),
-                          AppButton(
-                            text: AppLocalizations.of(context)!.login,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, Routes.registerRoute);
-                            },
-                          ),
-                        ],
+                      TextInputField(
+                        validator: ((input) {
+                          if (input!.isEmpty) {
+                            return 'Full name is empty';
+                          }
+                        }),
+                        controller: _fullNameController,
+                        hintText: AppLocalizations.of(context)!.fullName,
+                        obscureText: false,
                       ),
-                    )
-                  ],
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      TextInputField(
+                        validator: ((input) {
+                          if (input!.isEmpty) {
+                            return 'Email is empty';
+                          }
+                          if (!(input.isValidEmail)) {
+                            return 'Email is not valid';
+                          }
+                        }),
+                        controller: _emailController,
+                        hintText: AppLocalizations.of(context)!.email,
+                        obscureText: false,
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      TextInputField(
+                        validator: ((input) {
+                          if (input!.isEmpty) {
+                            return 'Phone number is empty';
+                          }
+                          if (!input.isValidPhone) {
+                            return 'Not valid phone number';
+                          }
+                        }),
+                        controller: _phoneController,
+                        hintText: AppLocalizations.of(context)!.phone,
+                        obscureText: false,
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      TextInputField(
+                        validator: ((input) {
+                          if (input!.isEmpty) {
+                            return 'Password is empty';
+                          }
+                          if (input.length < 6) {
+                            return 'Password is too short';
+                          }
+                        }),
+                        controller: _passwordController,
+                        hintText: AppLocalizations.of(context)!.password,
+                        obscureText: true,
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      TextInputField(
+                        validator: ((input) {
+                          if (input!.isEmpty) {
+                            return 'Password is empty';
+                          }
+                          if (input != _passwordController.text) {
+                            return 'Password not match';
+                          }
+                          if (input.length < 6) {
+                            return 'Password is too short';
+                          }
+                        }),
+                        controller: _confirmPasswordController,
+                        hintText: AppLocalizations.of(context)!.confirmPassword,
+                        obscureText: true,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            AppButton(
+                              text: AppLocalizations.of(context)!.register,
+                              onPressed: () {
+                                if (_key.currentState!.validate()) {}
+                              },
+                            ),
+                            AppButton(
+                              text: AppLocalizations.of(context)!.login,
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, Routes.registerRoute);
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],
