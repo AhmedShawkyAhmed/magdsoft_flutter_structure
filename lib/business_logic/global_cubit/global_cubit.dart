@@ -55,8 +55,8 @@ class GlobalCubit extends Cubit<GlobalState> {
       if (response.data.values.last is List) {
         User user = User.fromJson(response.data["account"].first);
         emit(GlobalAuthState(user: user, status: GlobalStateStatus.userLoaded));
-        await CacheHelper.saveDataSharedPreference(
-            key: "user", value: user.toJson());
+        CacheHelper.saveDataSharedPreference(
+            key: "user", value: jsonEncode(user.toJson()));
       } else {
         emit(GlobalAuthState(
             status: GlobalStateStatus.submissionFailure,

@@ -15,8 +15,11 @@ class Routes {
 }
 
 class AppRouter {
-  final User? user = User.fromJson(
-      jsonDecode(CacheHelper.getDataFromSharedPreference(key: "user")));
+  final User? user =
+      CacheHelper.getDataFromSharedPreference(key: "user") != null
+          ? User.fromJson(
+              jsonDecode(CacheHelper.getDataFromSharedPreference(key: "user")))
+          : null;
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':

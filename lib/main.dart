@@ -20,6 +20,7 @@ Future<void> main() async {
     () async {
       DioHelper.init();
       await CacheHelper.init();
+
       final locale =
           CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
       delegate = await LocalizationDelegate.create(
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print('${CacheHelper.getDataFromSharedPreference(key: "user")}');
     Intl.defaultLocale = delegate.currentLocale.languageCode;
 
     delegate.onLocaleChanged = (Locale value) async {
@@ -66,7 +68,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    print('${CacheHelper.getDataFromSharedPreference(key: "user")} shared main');
     return MultiBlocProvider(
       providers: [
         BlocProvider(

@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/app_button.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/change_langauge_button.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/text_input_field.dart';
+import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginScreen extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final _key = GlobalKey<FormState>();
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  final _key = GlobalKey<FormState>();
+  @override
+  void initState() {
+    fToast.init(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +142,12 @@ class LoginScreen extends StatelessWidget {
                                       GlobalStateStatus.userLoaded) {
                                     Navigator.pushReplacementNamed(
                                         context, Routes.userRoute);
+                                  }
+                                }
+                                if (state is GlobalAuthState) {
+                                  if (state.status ==
+                                      GlobalStateStatus.submissionFailure) {
+                                    showToast(state.errorMessage);
                                   }
                                 }
                               },

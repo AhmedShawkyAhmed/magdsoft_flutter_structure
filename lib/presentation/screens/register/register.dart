@@ -8,15 +8,33 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../widget/change_langauge_button.dart';
+import '../../widget/toast.dart';
 
-class RegisterScreen extends StatelessWidget {
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final _key = GlobalKey<FormState>();
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _fullNameController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  final TextEditingController _phoneController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final _key = GlobalKey<FormState>();
+  @override
+  void initState() {
+    fToast.init(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +192,10 @@ class RegisterScreen extends StatelessWidget {
                                       GlobalStateStatus.userLoaded) {
                                     Navigator.pushReplacementNamed(
                                         context, Routes.userRoute);
+                                  }
+                                  if (state.status ==
+                                      GlobalStateStatus.submissionFailure) {
+                                    showToast(state.errorMessage);
                                   }
                                 }
                               },
