@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: Container(
+                    child: SizedBox(
                       height: 22.h,
                       child: Image.asset(
                         'assets/images/flutter.png',
@@ -86,6 +86,7 @@ class LoginScreen extends StatelessWidget {
                           if (!input.isValidEmail) {
                             return 'Not valid Email';
                           }
+                          return null;
                         }),
                         hintText: AppLocalizations.of(context)!.email,
                         obscureText: false,
@@ -101,6 +102,7 @@ class LoginScreen extends StatelessWidget {
                           if (input.length < 6) {
                             return 'Password is too short';
                           }
+                          return null;
                         }),
                         controller: _passwordController,
                         hintText: AppLocalizations.of(context)!.password,

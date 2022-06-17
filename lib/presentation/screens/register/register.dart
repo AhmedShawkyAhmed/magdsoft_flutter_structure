@@ -10,11 +10,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widget/change_langauge_button.dart';
 
 class RegisterScreen extends StatelessWidget {
-  TextEditingController _fullNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final _key = GlobalKey<FormState>();
   RegisterScreen({Key? key}) : super(key: key);
 
@@ -85,6 +85,7 @@ class RegisterScreen extends StatelessWidget {
                           if (input!.isEmpty) {
                             return 'Full name is empty';
                           }
+                          return null;
                         }),
                         controller: _fullNameController,
                         hintText: AppLocalizations.of(context)!.fullName,
@@ -101,6 +102,7 @@ class RegisterScreen extends StatelessWidget {
                           if (!(input.isValidEmail)) {
                             return 'Email is not valid';
                           }
+                          return null;
                         }),
                         controller: _emailController,
                         hintText: AppLocalizations.of(context)!.email,
@@ -117,6 +119,7 @@ class RegisterScreen extends StatelessWidget {
                           if (!input.isValidPhone) {
                             return 'Not valid phone number';
                           }
+                          return null;
                         }),
                         controller: _phoneController,
                         hintText: AppLocalizations.of(context)!.phone,
@@ -133,6 +136,7 @@ class RegisterScreen extends StatelessWidget {
                           if (input.length < 6) {
                             return 'Password is too short';
                           }
+                          return null;
                         }),
                         controller: _passwordController,
                         hintText: AppLocalizations.of(context)!.password,
@@ -152,6 +156,7 @@ class RegisterScreen extends StatelessWidget {
                           if (input.length < 6) {
                             return 'Password is too short';
                           }
+                          return null;
                         }),
                         controller: _confirmPasswordController,
                         hintText: AppLocalizations.of(context)!.confirmPassword,

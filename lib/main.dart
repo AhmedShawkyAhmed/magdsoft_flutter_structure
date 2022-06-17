@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:magdsoft_flutter_structure/business_logic/bloc_observer.dart';
@@ -68,6 +66,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    print('${CacheHelper.getDataFromSharedPreference(key: "user")} shared main');
     return MultiBlocProvider(
       providers: [
         BlocProvider(

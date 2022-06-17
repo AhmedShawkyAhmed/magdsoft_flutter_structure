@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 
 // FIXME add padding problem
 class TextInputField extends StatefulWidget {

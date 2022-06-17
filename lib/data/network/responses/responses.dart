@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:magdsoft_flutter_structure/data/models/account_model.dart';
 import 'package:magdsoft_flutter_structure/data/network/dio_exceptions.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 

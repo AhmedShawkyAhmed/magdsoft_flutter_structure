@@ -1,16 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
+import 'package:magdsoft_flutter_structure/data/models/account_model.dart';
+import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/app_bar.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/app_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../business_logic/global_cubit/global_cubit.dart';
-import '../../../data/models/account_model.dart';
 import '../../widget/data_place_container.dart';
 
-class UserScreen extends StatelessWidget {
-  UserScreen({Key? key}) : super(key: key);
+class UserScreen extends StatefulWidget {
+  const UserScreen({Key? key}) : super(key: key);
+
+  @override
+  State<UserScreen> createState() => _UserScreenState();
+}
+
+class _UserScreenState extends State<UserScreen> {
+  late final User? user = User.fromJson(
+      jsonDecode(CacheHelper.getDataFromSharedPreference(key: "user")));
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +41,14 @@ class UserScreen extends StatelessWidget {
             SizedBox(width: double.infinity, height: 15.h),
             BlocBuilder<GlobalCubit, GlobalState>(
               builder: (context, state) {
+                if (state is GlobalInitial) {
+                  return DataPlaceContainer(
+                    user: user,
+                  );
+                }
                 if (state is GlobalAuthState) {
                   return DataPlaceContainer(
-                    user: state.user,
+                    user: user,
                   );
                 }
                 return Text('No user',
@@ -43,7 +60,10 @@ class UserScreen extends StatelessWidget {
             ),
             SizedBox(height: 40.h),
             AppButton.logoutButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<GlobalCubit>().logout();
+                Navigator.pushReplacementNamed(context, Routes.loginRoute);
+              },
               text: AppLocalizations.of(context)!.logout,
             ),
             SizedBox(height: 3.h),

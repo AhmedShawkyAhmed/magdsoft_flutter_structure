@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
+import 'package:magdsoft_flutter_structure/data/models/account_model.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/login/login.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/register/register.dart';
-import 'package:magdsoft_flutter_structure/presentation/screens/splash/splash.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/user/user_profile.dart';
 
 class Routes {
@@ -12,10 +15,13 @@ class Routes {
 }
 
 class AppRouter {
+  final User? user = User.fromJson(
+      jsonDecode(CacheHelper.getDataFromSharedPreference(key: "user")));
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(
+            builder: (_) => user == null ? LoginScreen() : UserScreen());
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case '/register':

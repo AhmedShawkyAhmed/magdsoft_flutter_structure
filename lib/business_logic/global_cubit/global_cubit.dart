@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/network/dio_exceptions.dart';
 
 import '../../data/models/account_model.dart';
@@ -10,6 +13,7 @@ part 'global_state.dart';
 
 class GlobalCubit extends Cubit<GlobalState> {
   final UserRespose _userRespose = UserRespose();
+  final CacheHelper _cacheHelper = CacheHelper();
 
   GlobalCubit() : super(GlobalInitial());
 
@@ -21,6 +25,8 @@ class GlobalCubit extends Cubit<GlobalState> {
       Response response = await _userRespose.signUser(email, password);
       if (response.data.values.last is List) {
         User user = User.fromJson(response.data["account"].first);
+        CacheHelper.saveDataSharedPreference(
+            key: "user", value: jsonEncode(user.toJson()));
         emit(GlobalAuthState(user: user, status: GlobalStateStatus.userLoaded));
       }
     } on DioExceptions catch (e) {
@@ -36,6 +42,10 @@ class GlobalCubit extends Cubit<GlobalState> {
     }
   }
 
+  Future<void> logout() async {
+    await CacheHelper.clearData();
+  }
+
   Future<void> registerWithEmailAndPasswordAndPhone(
       String email, String password, String phone, String name) async {
     emit(SubmissionInProgress());
@@ -45,6 +55,8 @@ class GlobalCubit extends Cubit<GlobalState> {
       if (response.data.values.last is List) {
         User user = User.fromJson(response.data["account"].first);
         emit(GlobalAuthState(user: user, status: GlobalStateStatus.userLoaded));
+        await CacheHelper.saveDataSharedPreference(
+            key: "user", value: user.toJson());
       } else {
         emit(GlobalAuthState(
             status: GlobalStateStatus.submissionFailure,
