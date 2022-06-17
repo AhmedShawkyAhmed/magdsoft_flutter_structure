@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/app_button.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/text_input_field.dart';
@@ -160,17 +162,37 @@ class RegisterScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            AppButton(
-                              text: AppLocalizations.of(context)!.register,
-                              onPressed: () {
-                                if (_key.currentState!.validate()) {}
+                            BlocListener<GlobalCubit, GlobalState>(
+                              listener: (context, state) {
+                                if (state is GlobalAuthState) {
+                                  if (state.status ==
+                                      GlobalStateStatus.userLoaded) {
+                                    Navigator.pushReplacementNamed(
+                                        context, Routes.userRoute);
+                                  }
+                                }
                               },
+                              child: AppButton(
+                                text: AppLocalizations.of(context)!.register,
+                                onPressed: () {
+                                  if (_key.currentState!.validate()) {
+                                    context
+                                        .read<GlobalCubit>()
+                                        .registerWithEmailAndPasswordAndPhone(
+                                          _emailController.text,
+                                          _passwordController.text,
+                                          _phoneController.text,
+                                          _fullNameController.text,
+                                        );
+                                  }
+                                },
+                              ),
                             ),
                             AppButton(
                               text: AppLocalizations.of(context)!.login,
                               onPressed: () {
-                                Navigator.pushNamed(
-                                    context, Routes.registerRoute);
+                                Navigator.pushReplacementNamed(
+                                    context, Routes.loginRoute);
                               },
                             ),
                           ],

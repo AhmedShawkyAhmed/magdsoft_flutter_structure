@@ -87,7 +87,6 @@ class _MyAppState extends State<MyApp> {
                     title: 'Werash',
                     localizationsDelegates:
                         AppLocalizations.localizationsDelegates,
-                    locale: delegate.currentLocale,
                     supportedLocales: AppLocalizations.supportedLocales,
                     onGenerateRoute: widget.appRouter.onGenerateRoute,
                     theme: appTheme,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/app_button.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/change_langauge_button.dart';
@@ -116,11 +118,28 @@ class LoginScreen extends StatelessWidget {
                                     context, Routes.registerRoute);
                               },
                             ),
-                            AppButton(
-                              text: AppLocalizations.of(context)!.login,
-                              onPressed: () {
-                                if (_key.currentState!.validate()) {}
+                            BlocListener<GlobalCubit, GlobalState>(
+                              listener: (context, state) {
+                                if (state is GlobalAuthState) {
+                                  if (state.status ==
+                                      GlobalStateStatus.userLoaded) {
+                                    Navigator.pushReplacementNamed(
+                                        context, Routes.userRoute);
+                                  }
+                                }
                               },
+                              child: AppButton(
+                                text: AppLocalizations.of(context)!.login,
+                                onPressed: () {
+                                  if (_key.currentState!.validate()) {
+                                    context
+                                        .read<GlobalCubit>()
+                                        .logInWithEmailAndPassword(
+                                            _emailController.text,
+                                            _passwordController.text);
+                                  }
+                                },
+                              ),
                             ),
                           ],
                         ),

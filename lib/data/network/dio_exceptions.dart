@@ -50,6 +50,8 @@ class DioExceptions implements Exception {
         return "user Not Found";
       case 405:
         return "user Not Found";
+      case 408:
+        return "Account Already Exist";
       case 500:
         return 'Internal server error';
       case 502:

@@ -6,19 +6,24 @@ import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 import '../../../constants/end_points.dart';
 
 class UserRespose {
-  final User user;
-  UserRespose({required this.user});
+  late final String email;
+  late final String password;
+  late final String phone;
+  late final String name;
 
-  Future<Response> signUser(User user) async {
+  UserRespose();
+
+  Future<Response> signUser(String email, String password) async {
     try {
       final Response response = await DioHelper.postData(
         url: loginEndPoint,
         body: {
-          'email': user.email,
-          'password': user.password,
+          'email': email,
+          'password': password,
         },
       );
-      if (response.statusCode == 200) {
+      print(response.data);
+      if (response.data['status'] == 200) {
         return response;
       } else {
         throw DioExceptions.fromResponse(response).toString();
@@ -28,20 +33,31 @@ class UserRespose {
       throw errorMessage;
     }
   }
-  Future<Response> registerUser(User user) async {
+
+  Future<Response> registerUser(
+      String email, String password, String phone, String name) async {
     try {
-      final Response response = await DioHelper.postData(
-        url: loginEndPoint,
+      final Response responseCheck = await DioHelper.postData(
+        url: registerEndPoint,
         body: {
-          'email': user.email,
-          'password': user.password,
-          'phone': user.phone,
+          'name': name,
+          'email': email,
+          'password': password,
+          'phone': phone,
         },
       );
-      if (response.statusCode == 200) {
+      if (responseCheck.statusCode == 200) {
+        Future.delayed(const Duration(seconds: 2));
+        final Response response = await DioHelper.postData(
+          url: loginEndPoint,
+          body: {
+            'email': email,
+            'password': password,
+          },
+        );
         return response;
       } else {
-        throw DioExceptions.fromResponse(response).toString();
+        throw DioExceptions.fromResponse(responseCheck).toString();
       }
     } on DioError catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
