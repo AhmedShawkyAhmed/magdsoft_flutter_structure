@@ -8,6 +8,7 @@ import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cu
 import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
+import 'package:magdsoft_flutter_structure/presentation/styles/theme.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
@@ -89,17 +90,7 @@ class _MyAppState extends State<MyApp> {
                     locale: delegate.currentLocale,
                     supportedLocales: AppLocalizations.supportedLocales,
                     onGenerateRoute: widget.appRouter.onGenerateRoute,
-                    theme: ThemeData(
-                      fontFamily: 'cairo',
-                      //scaffoldBackgroundColor: AppColors.white,
-                      appBarTheme: const AppBarTheme(
-                        elevation: 0.0,
-                        systemOverlayStyle: SystemUiOverlayStyle(
-                          //statusBarColor: AppColors.transparent,
-                          statusBarIconBrightness: Brightness.dark,
-                        ),
-                      ),
-                    ),
+                    theme: appTheme,
                   );
                 }),
               );

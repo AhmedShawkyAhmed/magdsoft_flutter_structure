@@ -20,6 +20,7 @@ ThemeData appTheme = ThemeData(
   ),
   // text field in sign in and register
   inputDecorationTheme: InputDecorationTheme(
+    
     filled: true,
     fillColor: AppColors.textInputFillColor,
     hintStyle: TextStyle(
