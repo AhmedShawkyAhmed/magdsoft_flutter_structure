@@ -1,27 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:magdsoft_flutter_structure/business_logic/bloc_observer.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
 import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
+import 'package:magdsoft_flutter_structure/presentation/styles/theme.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 late LocalizationDelegate delegate;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocOverrides.runZoned(
-        () async {
+    () async {
       DioHelper.init();
       await CacheHelper.init();
+
       final locale =
           CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
       delegate = await LocalizationDelegate.create(
@@ -53,6 +52,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print('${CacheHelper.getDataFromSharedPreference(key: "user")}');
     Intl.defaultLocale = delegate.currentLocale.languageCode;
 
     delegate.onLocaleChanged = (Locale value) async {
@@ -85,27 +85,11 @@ class _MyAppState extends State<MyApp> {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
                     title: 'Werash',
-                    localizationsDelegates: [
-                      GlobalCupertinoLocalizations.delegate,
-                      DefaultCupertinoLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      delegate,
-                    ],
-                    locale: delegate.currentLocale,
-                    supportedLocales: delegate.supportedLocales,
+                    localizationsDelegates:
+                        AppLocalizations.localizationsDelegates,
+                    supportedLocales: AppLocalizations.supportedLocales,
                     onGenerateRoute: widget.appRouter.onGenerateRoute,
-                    theme: ThemeData(
-                      fontFamily: 'cairo',
-                      //scaffoldBackgroundColor: AppColors.white,
-                      appBarTheme: const AppBarTheme(
-                        elevation: 0.0,
-                        systemOverlayStyle: SystemUiOverlayStyle(
-                          //statusBarColor: AppColors.transparent,
-                          statusBarIconBrightness: Brightness.dark,
-                        ),
-                      ),
-                    ),
+                    theme: appTheme,
                   );
                 }),
               );
