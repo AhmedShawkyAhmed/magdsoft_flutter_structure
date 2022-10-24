@@ -9,9 +9,12 @@ import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cu
 import 'package:magdsoft_flutter_structure/data/data_providers/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/data_providers/remote/dio_helper.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/login/login.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
+
+import 'constants/end_points.dart';
 
 
 late LocalizationDelegate delegate;
@@ -22,15 +25,23 @@ Future<void> main() async {
         () async {
       DioHelper.init();
       await CacheHelper.init();
+     // name = CacheHelper.getDataFromSharedPreference(key: 'name') ?? '';
+     // email = CacheHelper.getDataFromSharedPreference(key: 'email') ?? '';
+     // phone = CacheHelper.getDataFromSharedPreference(key: 'phone') ?? '';
+
       final locale =
-          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
+          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "en";
       delegate = await LocalizationDelegate.create(
         fallbackLocale: locale,
         supportedLocales: ['ar', 'en'],
       );
       await delegate.changeLocale(Locale(locale));
-      runApp(MyApp(
-        appRouter: AppRouter(),
+      runApp( MyApp(
+        //appRouter: AppRouter(),
+        widget: LoginScreen(),
+        // name: name!,
+        // email: email!,
+        // phone: phone!,
       ));
     },
     blocObserver: MyBlocObserver(),
@@ -38,10 +49,18 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  final AppRouter appRouter;
+  //final AppRouter appRouter;
+  final Widget widget;
+  // final String name;
+  // final String email;
+  // final String phone;
 
   const MyApp({
-    required this.appRouter,
+   // required this.appRouter,
+    required this.widget,
+    // required this.name,
+    // required this.email,
+    // required this.phone,
     Key? key,
   }) : super(key: key);
 
@@ -94,7 +113,7 @@ class _MyAppState extends State<MyApp> {
                     ],
                     locale: delegate.currentLocale,
                     supportedLocales: delegate.supportedLocales,
-                    onGenerateRoute: widget.appRouter.onGenerateRoute,
+                    //onGenerateRoute: widget.appRouter.onGenerateRoute,
                     theme: ThemeData(
                       fontFamily: 'cairo',
                       //scaffoldBackgroundColor: AppColors.white,
@@ -106,6 +125,7 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                     ),
+                    home: widget.widget,
                   );
                 }),
               );
