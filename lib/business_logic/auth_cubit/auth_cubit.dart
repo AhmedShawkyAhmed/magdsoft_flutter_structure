@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/data_providers/local/cache_helper.dart';
 import '../../data/models/login_request_model.dart';
 import '../../data/models/verify_request_model.dart';
 import '../../data/network/responses/login_response.dart';
@@ -11,7 +12,7 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthCubitInitial());
-static AuthCubit get(context) => BlocProvider.of(context);
+  static AuthCubit get(context) => BlocProvider.of(context);
 
   login(String name, String phone) async {
     emit(LoginLoading());
@@ -30,9 +31,17 @@ static AuthCubit get(context) => BlocProvider.of(context);
     final request = VerifyRequestModel(code: code);
     final response = await VerifyResponse.instance(requestModel: request);
     if (response.status == 200) {
+      CacheHelper.saveDataSharedPreference(
+        key: 'ACCOUNT_VERIFIED',
+        value: true,
+      );
       emit(VerifySuccess(message: response.message));
     } else {
       emit(VerifyFailed(message: response.message));
     }
+  }
+
+  signOut() async {
+    CacheHelper.removeData(key: 'ACCOUNT_VERIFIED');
   }
 }

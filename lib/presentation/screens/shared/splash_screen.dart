@@ -50,12 +50,16 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(
       const Duration(seconds: 3),
       () {
-
         final user =
-            CacheHelper.getDataFromSharedPreference(key: 'USER_ACCOUNT');
-      // if have data push to home screen if go to register --> login screen
-        Navigator.pushNamedAndRemoveUntil(
-            context, user ? homeScreen : loginScreen, (route) => false);
+            CacheHelper.getDataFromSharedPreference(key: 'ACCOUNT_VERIFIED');
+        // if have data push to home screen if go to register --> login screen
+        if (user == null) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, loginScreen, (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, homeScreen, (route) => false);
+        }
       },
     );
   }
